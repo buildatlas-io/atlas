@@ -2,6 +2,7 @@
 
 import { Command } from "commander";
 import { listFiles } from "../tools/list-files.js";
+import { readFile } from "../tools/read-file.js";
 
 const program = new Command();
 
@@ -34,6 +35,13 @@ program
     for (const file of files) {
       console.log(`- ${file}`);
     }
+
+    const readmeContent = await readFile("README.md");
+    const readmePreview = readmeContent.split("\n").slice(0, 5).join("\n");
+
+    console.log("");
+    console.log("README Preview:");
+    console.log(readmePreview);
   });
 
 program.parse(process.argv);
