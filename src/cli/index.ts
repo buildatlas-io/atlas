@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import { listFiles } from "../tools/list-files.js";
 
 const program = new Command();
 
@@ -13,7 +14,9 @@ program
   .command("run")
   .description("Run Atlas with a developer task.")
   .argument("<task>", "The task Atlas should receive.")
-  .action((task: string) => {
+  .action(async (task: string) => {
+    const files = await listFiles();
+
     console.log("");
     console.log("Atlas v0.1");
     console.log("");
@@ -25,6 +28,12 @@ program
     console.log("");
     console.log("Runtime:");
     console.log("Initialized");
+    console.log("");
+    console.log("Project Files:");
+
+    for (const file of files) {
+      console.log(`- ${file}`);
+    }
   });
 
 program.parse(process.argv);
